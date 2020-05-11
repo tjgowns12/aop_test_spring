@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<bean id="common" class="com.care.controller.CommonClass" />
+	
+	<aop:config> 
+	<aop:aspect id="comService" ref="common"><!-- 공통기능으로 추가 할 것이다 -->
+	<!-- 어느 시점에 실행할꺼냐--> 	
+	<aop:pointcut expression="within(com.care.controller.CoreClass)" id="comSerImpl" />
+	<!-- CoreClass안에 있는 메소드가 실행되면 실행되면//xml에 설정했던 공통기능기 실행됨 -->
+	  <aop:around method="commonAop" pointcut-ref="comSerImpl" />
+			
+	<!-- 메소드 commonAop를 실행한다. --><!-- aop:around는  CoreClass가 실행되는 전과후로 실행됨 -->
+	 </aop:aspect>
+	 </aop:config>
+	<!-- 	
+	<aop:config>
+	<aop:aspect id="comService" ref="common">
+	<aop:pointcut id="comSerImpl"
+			 	expression="within(com.care.controller.CoreClass)"  />
+	<aop:before pointcut-ref="comSerImpl" method="beforeAdvice" />
+	</aop:aspect>
+	</aop:config> -->
+		
+		
+		
+		
+
+	<bean id="core" class="com.care.controller.CoreClass" />
+
+</beans>
